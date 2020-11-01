@@ -5,7 +5,8 @@ exports.backUp = async (origin, backup) => {
     // Build the command
     const rsync = new Rsync()
       .shell('ssh')
-      .flags('az')
+      // .flags('az')
+      .flags('r')
       .source(origin)
       .destination(backup)
 
