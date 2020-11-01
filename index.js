@@ -1,51 +1,12 @@
-const fs = require('fs')
 const rimraf = require('rimraf')
 
 const { settings } = require('./settings')
-const { getFilePaths } = require('./getFilePaths')
 const { removeDuplicates } = require('./removeDuplicates')
 const { backUp } = require('./backUp')
 
 ;(async _ => {
   try {
-    // get all file paths
-    const files = await getFilePaths(settings.origin)
-
-    // remove duplicates
-    let toRemove = await Promise.all(
-      files.map(async file => {
-        try {
-          const longuestDuplicates = await removeDuplicates(
-            file,
-            settings.originDir
-          )
-
-          if (longuestDuplicates.length) {
-            return longuestDuplicates
-          }
-        } catch (error) {
-          console.log('error', error)
-        }
-      })
-    )
-
-    // remove undefineds
-    const toRemove2 = toRemove.filter(item => item !== undefined)
-
-    // compile into 1 array
-    let toRemove3 = []
-
-    toRemove2.forEach(arr => {
-      toRemove3 = [...toRemove3, ...arr]
-    })
-
-    // remove duplicate of toRemove3
-    const uniqsToRemove = [...new Set(toRemove3)]
-
-    // remove duplicates on hard drive
-    uniqsToRemove.forEach(async file => {
-      await fs.unlinkSync(file)
-    })
+    await removeDuplicates(settings.origin, settings.originDir)
 
     // make backups
     if (settings.backup1) {

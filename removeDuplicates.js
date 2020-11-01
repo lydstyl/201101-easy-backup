@@ -1,7 +1,9 @@
-const fd = require('file-duplicates')
 const fs = require('fs')
+const fd = require('file-duplicates')
 
-function removeDuplicates(filePath, dirPath) {
+const { getFilePaths } = require('./getFilePaths')
+
+function getDuplicates(filePath, dirPath) {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, function (err, buffer) {
       if (err) {
@@ -16,7 +18,7 @@ function removeDuplicates(filePath, dirPath) {
             resolve(longuestDuplicates)
           })
           .catch(function (err) {
-            console.log('removeDuplicatess -> err', err)
+            console.log('getDuplicates -> err', err)
 
             reject(err)
           })
@@ -41,6 +43,48 @@ function getLonguestDuplicates(duplicates) {
   longuestDuplicates.shift()
 
   return longuestDuplicates
+}
+
+const removeDuplicates = async (magicPath, path) => {
+  try {
+    // get all file paths
+    const files = await getFilePaths(magicPath)
+
+    // remove duplicates
+    let toRemove = await Promise.all(
+      files.map(async file => {
+        try {
+          const longuestDuplicates = await getDuplicates(file, path)
+
+          if (longuestDuplicates.length) {
+            return longuestDuplicates
+          }
+        } catch (error) {
+          console.log('error', error)
+        }
+      })
+    )
+
+    // remove undefineds
+    const toRemove2 = toRemove.filter(item => item !== undefined)
+
+    // compile into 1 array
+    let toRemove3 = []
+
+    toRemove2.forEach(arr => {
+      toRemove3 = [...toRemove3, ...arr]
+    })
+
+    // remove duplicate of toRemove3
+    const uniqsToRemove = [...new Set(toRemove3)]
+
+    // remove duplicates on hard drive
+    uniqsToRemove.forEach(async file => {
+      await fs.unlinkSync(file)
+    })
+  } catch (error) {
+    console.log('error', error)
+  }
 }
 
 exports.removeDuplicates = removeDuplicates
