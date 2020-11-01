@@ -1,4 +1,5 @@
 const fs = require('fs')
+const rimraf = require('rimraf')
 
 const { settings } = require('./settings')
 const { getFilePaths } = require('./getFilePaths')
@@ -44,7 +45,7 @@ const { backUp } = require('./backUp')
       // remove duplicate of toRemove3
       return [...new Set(toRemove3)]
     })
-    .then(uniqsToRemove => {
+    .then(async uniqsToRemove => {
       // remove duplicates on hard drive
       uniqsToRemove.forEach(async file => {
         await fs.unlinkSync(file)
@@ -57,7 +58,14 @@ const { backUp } = require('./backUp')
 
       backUp(settings.originDir, settings.backup2)
 
+      return
+    })
+    .then(_ => {
       // rm origin files
+
+      rimraf(settings.origin, function () {
+        console.log('done')
+      })
 
       // optional removeFolderDuplicates(backup2)
     })

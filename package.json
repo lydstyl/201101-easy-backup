@@ -15,6 +15,7 @@
   "dependencies": {
     "file-duplicates": "^1.1.0",
     "glob": "^7.1.6",
+    "rimraf": "^3.0.2",
     "rsync": "^0.6.1"
   }
 }

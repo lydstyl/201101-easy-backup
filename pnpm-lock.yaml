@@ -1,6 +1,7 @@
 dependencies:
   file-duplicates: 1.1.0
   glob: 7.1.6
+  rimraf: 3.0.2
   rsync: 0.6.1
 devDependencies:
   jest: 26.6.1
@@ -3059,7 +3060,6 @@ packages:
   /rimraf/3.0.2:
     dependencies:
       glob: 7.1.6
-    dev: true
     hasBin: true
     resolution:
       integrity: sha512-JZkJMZkAGFFPP2YqXZXPbMlMBgsxzE8ILs4lMIX/2o0L9UBw9O/Y3o6wFw/i9YLapcUJWwqbi3kdxIPdC62TIA==
@@ -3791,4 +3791,5 @@ specifiers:
   file-duplicates: ^1.1.0
   glob: ^7.1.6
   jest: ^26.6.1
+  rimraf: ^3.0.2
   rsync: ^0.6.1
