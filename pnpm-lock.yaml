@@ -1,6 +1,7 @@
 dependencies:
   file-duplicates: 1.1.0
   glob: 7.1.6
+  rsync: 0.6.1
 devDependencies:
   jest: 26.6.1
 lockfileVersion: 5.2
@@ -3068,6 +3069,10 @@ packages:
       node: 6.* || >= 7.*
     resolution:
       integrity: sha512-nfMOlASu9OnRJo1mbEk2cz0D56a1MBNrJ7orjRZQG10XDyuvwksKbuXNp6qa+kbn839HwjwhBzhFmdsaEAfauA==
+  /rsync/0.6.1:
+    dev: false
+    resolution:
+      integrity: sha1-NoGgCYvYdQRI+L+dof7gn3djdCs=
   /safe-buffer/5.1.2:
     dev: true
     resolution:
@@ -3786,3 +3791,4 @@ specifiers:
   file-duplicates: ^1.1.0
   glob: ^7.1.6
   jest: ^26.6.1
+  rsync: ^0.6.1

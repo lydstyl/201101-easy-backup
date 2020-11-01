@@ -55,7 +55,9 @@ const { backUp } = require('./backUp')
     .then(_ => {
       backUp(settings.originDir, settings.backup1)
 
-      // backUp(origin, backup2)
+      backUp(settings.originDir, settings.backup2)
+
+      // rm origin files
 
       // optional removeFolderDuplicates(backup2)
     })
