@@ -34,7 +34,7 @@ function getDuplicates(filePath, dirPath) {
 }
 
 function getLonguestDuplicates(duplicates) {
-  if (duplicates.length === 1) {
+  if (duplicates.length === 0 || duplicates.length === 1) {
     return []
   }
 
@@ -92,5 +92,7 @@ const removeDuplicates = async (magicPath, path) => {
     console.log('error', error)
   }
 }
+
+exports.getLonguestDuplicates = getLonguestDuplicates
 
 exports.removeDuplicates = removeDuplicates
