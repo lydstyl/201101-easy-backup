@@ -3,6 +3,20 @@ const fd = require('file-duplicates')
 
 const { getFilePaths } = require('./getFilePaths')
 
+async function getFileDuplicates(buffer, dirPath) {
+  try {
+    const paths = await fd.find(buffer, dirPath, ['.*', '*.js'])
+
+    const longuestDuplicates = getLonguestDuplicates(paths)
+
+    return longuestDuplicates
+  } catch (error) {
+    console.log('getFileDuplicates -> error', error)
+
+    return error
+  }
+}
+
 function getDuplicates(filePath, dirPath) {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, function (err, buffer) {
@@ -11,17 +25,9 @@ function getDuplicates(filePath, dirPath) {
       }
 
       if (buffer) {
-        fd.find(buffer, dirPath, ['.*', '*.js'])
-          .then(function (paths) {
-            const longuestDuplicates = getLonguestDuplicates(paths)
+        const longuestDuplicates = getFileDuplicates(buffer, dirPath)
 
-            resolve(longuestDuplicates)
-          })
-          .catch(function (err) {
-            console.log('getDuplicates -> err', err)
-
-            reject(err)
-          })
+        resolve(longuestDuplicates)
       }
     })
   })
