@@ -18,6 +18,7 @@ exports.settings = {
   origin: './2020/**/*', // the magic string to select what to back up
   backup1: './backup1', // the first backup folder
   backup2: './backup2', // the seconde backup folder
+  removeOriginAfterBackUp: false, // carreful with this one
 }
 ```
 
