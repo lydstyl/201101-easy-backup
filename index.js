@@ -1,7 +1,11 @@
 const { settings } = require('./settings')
-console.log('settings', settings)
+const { getFilePaths } = require('./getFilePaths')
 
-// import removeFolderDuplicates from './removeFolderDuplicates'
+;(async _ => {
+  const files = await getFilePaths(settings.origin)
+
+  console.log('getFilePaths -> files', files)
+})()
 
 // removeFolderDuplicates(origin)
 
